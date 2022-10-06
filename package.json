@@ -1,0 +1,19 @@
+{
+  "name": "webgis-st-within-try",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rhomadon/webgis-st-within-try.git"
+  },
+  "author": "rhomadon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rhomadon/webgis-st-within-try/issues"
+  },
+  "homepage": "https://github.com/Rhomadon/webgis-st-within-try#readme"
+}
