@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Rhomadon/webgis-st-within-try/issues"
   },
-  "homepage": "https://github.com/Rhomadon/webgis-st-within-try#readme"
+  "homepage": "https://github.com/Rhomadon/webgis-st-within-try#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
