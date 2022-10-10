@@ -34,9 +34,24 @@ const postShp = ("/", async (req, res, next) => {
 })
 
 const getLiquidity_sell = ("/", async (req, res, next) => {
+	// try {
+	// 	let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM liquidity_sell_jkt LIMIT 10) AS t`
+	// 	client.query(limit, (err, result) => {
+	// 		if (!err) {
+	// 			console.log('Data liquidity_sell Success!')
+	// 			res.json(result.rows[0].json_build_object)
+	// 		} else {
+	// 			res.json(err.stack)
+	// 		}
+	// 	})
+	// } catch (error) {
+	// 	console.log(error.message)
+	// }
+	
 	try {
-		let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM liquidity_sell_jkt LIMIT 10) AS t`
-		client.query(limit, (err, result) => {
+		let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM liquidity_sell_jkt as t`
+
+		client.query(text, (err, result) => {
 			if (!err) {
 				console.log('Data liquidity_sell Success!')
 				res.json(result.rows[0].json_build_object)
@@ -45,7 +60,7 @@ const getLiquidity_sell = ("/", async (req, res, next) => {
 			}
 		})
 	} catch (error) {
-		console.log(error.message)
+		res.json(error.message)
 	}
 	// try {
 	// 	let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM liquidity_sell_jkt as t`
@@ -64,23 +79,9 @@ const getLiquidity_sell = ("/", async (req, res, next) => {
 })
 
 const getLiquidity_rent = ("/", async (req, res, next) => {
-	try {
-		let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM liquidity_rent_jkt LIMIT 10) AS t`
-		client.query(limit, (err, result) => {
-			if (!err) {
-				console.log('Data liquidity_rent Success!')
-				res.json(result.rows[0].json_build_object)
-			} else {
-				res.json(err.stack)
-			}
-		})
-	} catch (error) {
-		console.log(error.message)
-	}
 	// try {
-	// 	let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM liquidity_rent_jkt as t`
-
-	// 	client.query(text, (err, result) => {
+	// 	let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM liquidity_rent_jkt LIMIT 10) AS t`
+	// 	client.query(limit, (err, result) => {
 	// 		if (!err) {
 	// 			console.log('Data liquidity_rent Success!')
 	// 			res.json(result.rows[0].json_build_object)
@@ -89,28 +90,28 @@ const getLiquidity_rent = ("/", async (req, res, next) => {
 	// 		}
 	// 	})
 	// } catch (error) {
-	// 	res.json(error.message)
+	// 	console.log(error.message)
 	// }
-})
-
-const getProperty_sell = ("/", async (req, res, next) => {
 	try {
-		let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM property_sell_jkt LIMIT 10) AS t`
-		client.query(limit, (err, result) => {
+		let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM liquidity_rent_jkt as t`
+
+		client.query(text, (err, result) => {
 			if (!err) {
-				console.log('Data property_sell Success!')
+				console.log('Data liquidity_rent Success!')
 				res.json(result.rows[0].json_build_object)
 			} else {
 				res.json(err.stack)
 			}
 		})
 	} catch (error) {
-		console.log(error.message)
+		res.json(error.message)
 	}
-	// try {
-	// 	let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM property_sell_jkt as t`
+})
 
-	// 	client.query(text, (err, result) => {
+const getProperty_sell = ("/", async (req, res, next) => {
+	// try {
+	// 	let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM property_sell_jkt LIMIT 10) AS t`
+	// 	client.query(limit, (err, result) => {
 	// 		if (!err) {
 	// 			console.log('Data property_sell Success!')
 	// 			res.json(result.rows[0].json_build_object)
@@ -119,28 +120,28 @@ const getProperty_sell = ("/", async (req, res, next) => {
 	// 		}
 	// 	})
 	// } catch (error) {
-	// 	res.json(error.message)
+	// 	console.log(error.message)
 	// }
-})
-
-const getProperty_rent = ("/", async (req, res, next) => {
 	try {
-		let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM property_rent_jkt LIMIT 10) AS t`
-		client.query(limit, (err, result) => {
+		let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM property_sell_jkt as t`
+
+		client.query(text, (err, result) => {
 			if (!err) {
-				console.log('Data property_rent Success!')
+				console.log('Data property_sell Success!')
 				res.json(result.rows[0].json_build_object)
 			} else {
 				res.json(err.stack)
 			}
 		})
 	} catch (error) {
-		console.log(error.message)
+		res.json(error.message)
 	}
-	// try {
-	// 	let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM property_rent_jkt as t`
+})
 
-	// 	client.query(text, (err, result) => {
+const getProperty_rent = ("/", async (req, res, next) => {
+	// try {
+	// 	let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM property_rent_jkt LIMIT 10) AS t`
+	// 	client.query(limit, (err, result) => {
 	// 		if (!err) {
 	// 			console.log('Data property_rent Success!')
 	// 			res.json(result.rows[0].json_build_object)
@@ -149,8 +150,22 @@ const getProperty_rent = ("/", async (req, res, next) => {
 	// 		}
 	// 	})
 	// } catch (error) {
-	// 	res.json(error.message)
+	// 	console.log(error.message)
 	// }
+	try {
+		let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM property_rent_jkt as t`
+
+		client.query(text, (err, result) => {
+			if (!err) {
+				console.log('Data property_rent Success!')
+				res.json(result.rows[0].json_build_object)
+			} else {
+				res.json(err.stack)
+			}
+		})
+	} catch (error) {
+		res.json(error.message)
+	}
 })
 
 module.exports = {

@@ -2,10 +2,10 @@ const express = require('express');
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const client = require("./connection/postgreSQL.js")
-const { postShp, getLiquidity_sell, getLiquidity_rent, getProperty_sell, getProperty_rent } = require("./controllers/shpController.js")
+const { getLiquidity_sell, getLiquidity_rent, getProperty_sell, getProperty_rent } = require("./controllers/shpController.js")
 
 const app = express();
-const PORT = 4000;
+const PORT = 5000;
 
 app.use(cors());
 app.use(bodyParser.json())
