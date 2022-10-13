@@ -5,7 +5,7 @@ const client = new Client({
 	user: 'postgres',
 	port: 5432,
 	password: '123456',
-	database: 'queryShpDB'
+	database: 'withinDB'
 })
 
 module.exports = client

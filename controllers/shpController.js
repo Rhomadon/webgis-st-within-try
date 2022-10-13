@@ -3,8 +3,8 @@ const stg = require("shapefile-to-geojson")
 
 const postShp = ("/", async (req, res, next) => {
 	const reqbod = req.body.fileName
-	const dbs = req.body.database
-	const geo = await stg.parseFiles("../queryFilename/assets/" + reqbod[0], "../queryFilename/assets/" + reqbod[1])
+	const tbl = req.body.table
+	const geo = await stg.parseFiles("../webgis-st-within-try/assets/" + reqbod[0], "../webgis-st-within-try/assets/" + reqbod[1])
 
 	let features = geo.features
 
@@ -18,7 +18,7 @@ const postShp = ("/", async (req, res, next) => {
 			let longitude = e.geometry.coordinates[0]
 			let latitude = e.geometry.coordinates[1]
 
-			client.query(`INSERT INTO ` + dbs + ` ("objectid", "idr_per_sq", "meshcode3", "type", "longitude", "latitude", "geom") VALUES($1, $2, $3, $4, $5, $6, ST_SetSRID(ST_MakePoint($7, $8), 4326))`, [objectid, idr_per_sq, meshcode3, type, longitude, latitude, longitude, latitude]).catch(err => {
+			client.query(`INSERT INTO ` + tbl + ` ("objectid", "idr_per_sq", "meshcode3", "type", "longitude", "latitude", "geom") VALUES($1, $2, $3, $4, $5, $6, ST_SetSRID(ST_MakePoint($7, $8), 4326))`, [objectid, idr_per_sq, meshcode3, type, longitude, latitude, longitude, latitude]).catch(err => {
 				if (!err) {
 					res.send('Insert Data Success!')
 				} else {
@@ -33,22 +33,55 @@ const postShp = ("/", async (req, res, next) => {
 	}
 })
 
+const getPolygon_monas = ("/", async (req, res, next) => {
+	try {
+		let sql = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM areas as t`
+		client.query(sql, (err, result) => {
+			if (!err) {
+				console.log('Data Polygon Monas Success!')
+				res.json(result.rows[0].json_build_object)
+			} else {
+				res.json(err.message)
+			}
+		})
+	} catch (err) {
+		console.log(err.message)
+	}
+})
+
 const getLiquidity_sell = ("/", async (req, res, next) => {
 	try {
-		let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM liquidity_sell_jkt as t`
-
-		client.query(text, (err, result) => {
+		let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM liquidity_sell_jkt LIMIT 10) AS t`
+		client.query(limit, (err, result) => {
 			if (!err) {
 				console.log('Data liquidity_sell Success!')
-				res.json(result.rows[0].json_build_object)
+				let count = result.rows[0].json_build_object
+				res.json(count)
 			} else {
 				res.json(err.stack)
 			}
 		})
 	} catch (error) {
-		res.json(error.message)
+		console.log(error.message)
 	}
+
+	// try {
+	// 	let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM liquidity_sell_jkt as t`
+
+	// 	client.query(text, (err, result) => {
+	// 		if (!err) {
+	// 			console.log('Data liquidity_sell Success!')
+	// 			res.json(result.rows[0].json_build_object)
+	// 		} else {
+	// 			res.json(err.stack)
+	// 		}
+	// 	})
+	// } catch (error) {
+	// 	res.json(error.message)
+	// }
 })
+
+
 
 const getLiquidity_rent = ("/", async (req, res, next) => {
 	try {
@@ -69,19 +102,34 @@ const getLiquidity_rent = ("/", async (req, res, next) => {
 
 const getProperty_sell = ("/", async (req, res, next) => {
 	try {
-		let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM property_sell_jkt as t`
-
-		client.query(text, (err, result) => {
+		let limit = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM (SELECT * FROM property_sell_jkt LIMIT 10) AS t`
+		client.query(limit, (err, result) => {
 			if (!err) {
-				console.log('Data property_sell Success!')
-				res.json(result.rows[0].json_build_object)
+				console.log('Data Property Sell Success!')
+				let count = result.rows[0].json_build_object
+				res.json(count)
 			} else {
 				res.json(err.stack)
 			}
 		})
 	} catch (error) {
-		res.json(error.message)
+		console.log(error.message)
 	}
+
+	// try {
+	// 	let text = `SELECT json_build_object('type', 'FeatureCollection','features', json_agg(ST_AsGeoJSON(t.*)::json)) FROM property_sell_jkt as t`
+
+	// 	client.query(text, (err, result) => {
+	// 		if (!err) {
+	// 			console.log('Data property_sell Success!')
+	// 			res.json(result.rows[0].json_build_object)
+	// 		} else {
+	// 			res.json(err.stack)
+	// 		}
+	// 	})
+	// } catch (error) {
+	// 	res.json(error.message)
+	// }
 })
 
 const getProperty_rent = ("/", async (req, res, next) => {
@@ -102,5 +150,5 @@ const getProperty_rent = ("/", async (req, res, next) => {
 })
 
 module.exports = {
-	postShp, getLiquidity_sell, getLiquidity_rent, getProperty_sell, getProperty_rent
+	postShp, getLiquidity_sell, getLiquidity_rent, getProperty_sell, getProperty_rent, getPolygon_monas
 }
