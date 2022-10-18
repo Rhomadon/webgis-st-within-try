@@ -16,7 +16,7 @@ app.use('/property-rent', getProperty_rent)
 app.use('/polygon-monas', getPolygon_monas)
 app.use('/post-shp', postShp)
 app.use('/ptswithinply', ptswithinply)
-app.use('/points_test', getPoints_test)
+app.use('/points-test', getPoints_test)
 
 app.get('/', (req, res)=>{
 	res.status(200);

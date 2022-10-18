@@ -18,10 +18,12 @@
   "homepage": "https://github.com/Rhomadon/webgis-st-within-try#readme",
   "dependencies": {
     "body-parser": "^1.20.0",
+    "bulma": "^0.9.4",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
+    "react-bulma-components": "^4.1.0",
     "shapefile-to-geojson": "^1.0.1"
   }
 }
